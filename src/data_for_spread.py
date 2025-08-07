@@ -3,7 +3,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 
 # --- 設定 ---
-SERVICE_ACCOUNT_FILE = 'research-181705-deac2d5759c1.json'  # ダウンロードしたサービスアカウント JSON
+SERVICE_ACCOUNT_FILE = 'google_service_account.json'  # ダウンロードしたサービスアカウント JSON
 SPREADSHEET_ID      = '1-xZeooGI0_s7PCmIL_7LNBMeTaZ9_PzoX9lyOOF1WX0'    # スプレッドシート ID
 # ----------------
 
