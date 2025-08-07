@@ -1,0 +1,21 @@
+{
+	"name": "Python 3",
+	"build": {
+	  "dockerfile": "Dockerfile.dev",
+	  // Dockerfile のあるフォルダ（.devcontainer）ではなく、プロジェクトのルートをコンテキストにしたい場合は "../" を指定
+	  "context": ".."
+	},
+	// VS Code 上で開くワークスペースフォルダ
+	"workspaceFolder": "/workspaces/愛ちゃんポイント収集",
+	// 必要に応じて拡張機能や設定を追記
+	"features": {
+		// Git を入れる
+		"ghcr.io/devcontainers/features/git:1": {}
+	  },
+	"extensions": [
+	  "ms-python.python",
+	  "ms-python.vscode-pylance",
+	  "saoudrizwan.claude-dev",
+	  "ms-toolsai.jupyter"
+	]
+  }
