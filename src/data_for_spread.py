@@ -33,20 +33,27 @@ def append_purchase_records(records: list[dict], update_ts: str):
     """
     ws = get_worksheet("直近の購入実績")
     all_rows = ws.get_all_values()[1:]  # ヘッダ行を除くすべての既存行
-    existing = {(r[0], r[1], r[2]) for r in all_rows}
+
+    # 既存データの先頭部分（(datetime, name, count)のリスト）
+    existing = [(r[0], r[1], r[2]) for r in all_rows]
+    # 直近購入実績（(datetime, name, count)のリスト）
+    new_records = [(str(rec["datetime"]), str(rec["name"]), str(rec["count"])) for rec in records]
+
+    n = len(new_records)
+    add_count = n  # 先頭からadd_count件を追加
+    for i in range(n):
+        # new_records[i:]とexisting[:n-i]が一致するか
+        if existing[:n-i] == new_records[i:]:
+            add_count = i
+            break
 
     to_append = []
-    for rec in records:
-        key = (rec["datetime"], rec["name"], str(rec["count"]))
-        if key not in existing:
-            to_append.append([rec["datetime"], rec["name"], rec["count"], update_ts])
+    for rec in records[:add_count]:
+        to_append.append([rec["datetime"], rec["name"], rec["count"], update_ts])
 
     if to_append:
-        ws.append_rows(to_append, value_input_option='USER_ENTERED')
+        ws.insert_rows(to_append, 2)  # 先頭に追加（ヘッダ行の次）
 
-    # 購入日時（1列目）で降順ソート
-    # sort((col_index, 'desc'))
-    ws.sort((1, 'des'))
 
 
 def update_overall_ranking_points(ranking: list[dict], update_ts: str):
