@@ -14,4 +14,4 @@ COPY . .
 # デフォルトのコマンド
 ENTRYPOINT ["python", "-m", "src.scrape_atjam2025"]
 
-CMD ["--interval", "60"]
+CMD ["--interval", "30"]

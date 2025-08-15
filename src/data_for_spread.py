@@ -1,4 +1,5 @@
 import gspread
+from gspread_formatting import format_cell_range, CellFormat, NumberFormat
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 
@@ -49,12 +50,15 @@ def append_purchase_records(records: list[dict], update_ts: str):
 
     to_append = []
     for rec in records[:add_count]:
-        to_append.append([rec["datetime"], rec["name"], rec["count"], update_ts])
+        to_append.append(["'"+rec["datetime"], rec["name"], rec["count"], update_ts])
 
     if to_append:
-        ws.insert_rows(to_append, 2)  # 先頭に追加（ヘッダ行の次）
+        ws.insert_rows(to_append, 2, value_input_option='USER_ENTERED')  # 先頭に追加（ヘッダ行の次）
 
-
+        fmt = CellFormat(
+            numberFormat=NumberFormat(type='DATE_TIME', pattern='yyyy-mm-dd hh:mm:ss')
+        )
+        format_cell_range(ws, 'D2:D', fmt)
 
 def update_overall_ranking_points(ranking: list[dict], update_ts: str):
     """

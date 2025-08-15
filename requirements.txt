@@ -2,4 +2,5 @@ beautifulsoup4
 requests
 ipykernel
 gspread
+gspread-formatting
 oauth2client
